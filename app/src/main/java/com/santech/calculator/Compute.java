@@ -20,6 +20,8 @@ public class Compute extends Activity {
      button0,buttoneqa,buttondel,buttondiv,buttonmul,buttonsub,buttonadd;
     float value1,value2;
     boolean div,mul,sub,add,chk,dot;
+    String tmp;
+    Character ch=null;
     TextView char1;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,18 +83,18 @@ public class Compute extends Activity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                output.setText(output.getText()+"1");
+                output.setText(output.getText() + "1");
                 char1.setText(char1.getText() + "1");
-                chk=true;
+                chk = true;
             }
         });
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                output.setText(output.getText()+"2");
+                output.setText(output.getText() + "2");
                 char1.setText(char1.getText() + "2");
-                chk=true;
+                chk = true;
             }
         });
         button3.setOnClickListener(new View.OnClickListener() {
@@ -184,11 +186,24 @@ public class Compute extends Activity {
                     output.setText("");
                 }
                 else{
-                    value1 = Float.parseFloat(output.getText() + "");
-                    div = true;
-                    dot=false;
-                    char1.setText(null);
-                    output.setText(output.getText() + "÷");
+                        tmp=output.getText().toString();
+                        ch=tmp.charAt(tmp.length()-1);
+                        if(ch == '÷'){}
+                        else if((ch == '+') || (ch == '-') || (ch == 'x') )
+                        {
+                            div=true;
+                            mul=add=sub=false;
+                            output.setText(tmp.substring(0,tmp.length()-1)+"÷");
+                        }
+                        else
+                        {
+                            value1 = Float.parseFloat(output.getText() + "");
+                            div = true;
+                            dot=false;
+                            char1.setText(null);
+                            output.setText(output.getText() + "÷");
+                        }
+
                 }
             }
         });
@@ -198,11 +213,23 @@ public class Compute extends Activity {
                 if (!chk){
                     output.setText("");
                 }else{
-                    value1 = Float.parseFloat(output.getText() + "");
-                    mul = true;
-                    dot=false;
-                    char1.setText(null);
-                    output.setText(output.getText()+"x");
+                    tmp=output.getText().toString();
+                    ch=tmp.charAt(tmp.length()-1);
+                    if ( ch == 'x' ) {}
+                    else if((ch == '+') || (ch == '-') || (ch == '÷'))
+                    {
+                        mul=true;
+                        add=sub=div=false;
+                        output.setText(tmp.substring(0,tmp.length()-1)+'x');
+                    }
+                    else
+                    {
+                        value1 = Float.parseFloat(output.getText() + "");
+                        mul = true;
+                        dot = false;
+                        char1.setText(null);
+                        output.setText(output.getText() + "x");
+                    }
                 }
             }
         });
@@ -212,11 +239,23 @@ public class Compute extends Activity {
                 if (!chk){
                     output.setText("");
                 }else{
-                    value1 = Float.parseFloat(output.getText() + "");
-                    sub = true;
-                    dot=false;
-                    char1.setText(null);
-                    output.setText(output.getText()+"-");
+                    tmp=output.getText().toString();
+                    ch=tmp.charAt(tmp.length()-1);
+                    if(ch == '-'){}
+                    else if((ch == '+') || (ch == 'x') || (ch == '÷'))
+                    {
+                        sub=true;
+                        add=mul=div=false;
+                        output.setText(tmp.substring(0,tmp.length()-1)+'-');
+                    }
+                    else
+                    {
+                        value1 = Float.parseFloat(output.getText() + "");
+                        sub = true;
+                        dot = false;
+                        char1.setText(null);
+                        output.setText(output.getText() + "-");
+                    }
                 }
             }
         });
@@ -227,11 +266,23 @@ public class Compute extends Activity {
                 {
                     output.setText(" ");
                 } else {
-                    value1 = Float.parseFloat((String) output.getText());
-                    add = true;
-                    dot=false;
-                    char1.setText(null);
-                    output.setText(output.getText()+"+");
+                    tmp=output.getText().toString();
+                    ch=tmp.charAt(tmp.length()-1);
+                    if(ch == '+'){}
+                    else if((ch == '-') || (ch == 'x') || (ch == '÷'))
+                    {
+                        add=true;
+                        sub=mul=div=false;
+                        output.setText(tmp.substring(0,tmp.length()-1)+'+');
+                    }
+                    else
+                    {
+                        value1 = Float.parseFloat((String) output.getText());
+                        add = true;
+                        dot = false;
+                        char1.setText(null);
+                        output.setText(output.getText() + "+");
+                    }
                 }
             }
         });
@@ -239,14 +290,12 @@ public class Compute extends Activity {
         buttoneqa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tmp;
                 if (chk) {
                     tmp = output.getText().toString();
-                    Character ch = null;
                     if (tmp.length() != 0) {
                         ch = tmp.charAt(tmp.length() - 1);
                     }
-                    if ((char1 != null) && (ch != '+') && (ch != '-') && (ch != 'x') && (ch != '÷')) {
+                    if ( (ch != '+') && (ch != '-') && (ch != 'x') && (ch != '÷')) {
                         value2 = Float.parseFloat(char1.getText() + "");
                         if (div) {
                             output.setText(value1 / value2 + "");
@@ -269,6 +318,7 @@ public class Compute extends Activity {
                         output.setText("");
                         chk=false;
                         dot=false;
+                        value1=0;
                     }
                 }
                 else {
