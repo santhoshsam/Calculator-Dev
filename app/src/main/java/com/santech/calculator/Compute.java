@@ -196,20 +196,13 @@ public class Compute extends Activity {
                             mul=add=sub=false;
                             output.setText(tmp.substring(0,tmp.length()-1)+"÷");
                         }
-                        else
-                        {
-                            if((add) || (sub) || (mul) || (div))
-                            {
-                                calculate();
-                                output.setText(output.getText() + "÷");
-                            }
-                            else {
-                                value1 = Float.parseFloat(output.getText() + "");
-                                div = true;
-                                dot = false;
-                                char1.setText(null);
-                                output.setText(output.getText() + "÷");
-                            }
+                        else {
+                            value1 = Float.parseFloat(output.getText() + "");
+                            div = true;
+                            dot = false;
+                            char1.setText(null);
+                            output.setText(output.getText() + "÷");
+
                         }
 
                 }
@@ -231,17 +224,13 @@ public class Compute extends Activity {
                         output.setText(tmp.substring(0,tmp.length()-1)+'x');
                     }
                     else {
-                        if (add || sub || mul || div) {
-                            calculate();
-                            output.setText(output.getText() + "x");
-                        }
-                        else {
-                            value1 = Float.parseFloat(output.getText() + "");
-                            mul = true;
-                            dot = false;
-                            char1.setText(null);
-                            output.setText(output.getText() + "x");
-                        }
+
+                        value1 = Float.parseFloat(output.getText() + "");
+                        mul = true;
+                        dot = false;
+                        char1.setText(null);
+                        output.setText(output.getText() + "x");
+
                     }
                 }
             }
@@ -261,20 +250,13 @@ public class Compute extends Activity {
                         add=mul=div=false;
                         output.setText(tmp.substring(0,tmp.length()-1)+'-');
                     }
-                    else
-                    {
-                        if (add || sub || mul || div)
-                        {
-                            calculate();
-                            output.setText(output.getText() + "-");
-                        }
-                        else {
-                            value1 = Float.parseFloat(output.getText() + "");
-                            sub = true;
-                            dot = false;
-                            char1.setText(null);
-                            output.setText(output.getText() + "-");
-                        }
+                    else {
+
+                        value1 = Float.parseFloat(output.getText() + "");
+                        sub = true;
+                        dot = false;
+                        char1.setText(null);
+                        output.setText(output.getText() + "-");
                     }
                 }
             }
@@ -295,20 +277,13 @@ public class Compute extends Activity {
                         sub=mul=div=false;
                         output.setText(tmp.substring(0,tmp.length()-1)+'+');
                     }
-                    else
-                    {
-                        if (add || sub || mul || div)
-                        {
-                            calculate();
-                            output.setText(output.getText() + "+");
-                        }
-                        else {
-                            value1 = Float.parseFloat((String) output.getText());
-                            add = true;
-                            dot = false;
-                            char1.setText(null);
-                            output.setText(output.getText() + "+");
-                        }
+                    else {
+
+                        value1 = Float.parseFloat((String) output.getText());
+                        add = true;
+                        dot = false;
+                        char1.setText(null);
+                        output.setText(output.getText() + "+");
                     }
                 }
             }
