@@ -177,6 +177,7 @@ public class Compute extends Activity {
                 output.setText("");
                 chk=false;
                 dot=false;
+                add=sub=mul=div=false;
             }
         });
         buttondiv.setOnClickListener(new View.OnClickListener() {
@@ -197,11 +198,18 @@ public class Compute extends Activity {
                         }
                         else
                         {
-                            value1 = Float.parseFloat(output.getText() + "");
-                            div = true;
-                            dot=false;
-                            char1.setText(null);
-                            output.setText(output.getText() + "÷");
+                            if((add) || (sub) || (mul) || (div))
+                            {
+                                calculate();
+                                output.setText(output.getText() + "÷");
+                            }
+                            else {
+                                value1 = Float.parseFloat(output.getText() + "");
+                                div = true;
+                                dot = false;
+                                char1.setText(null);
+                                output.setText(output.getText() + "÷");
+                            }
                         }
 
                 }
@@ -222,13 +230,18 @@ public class Compute extends Activity {
                         add=sub=div=false;
                         output.setText(tmp.substring(0,tmp.length()-1)+'x');
                     }
-                    else
-                    {
-                        value1 = Float.parseFloat(output.getText() + "");
-                        mul = true;
-                        dot = false;
-                        char1.setText(null);
-                        output.setText(output.getText() + "x");
+                    else {
+                        if (add || sub || mul || div) {
+                            calculate();
+                            output.setText(output.getText() + "x");
+                        }
+                        else {
+                            value1 = Float.parseFloat(output.getText() + "");
+                            mul = true;
+                            dot = false;
+                            char1.setText(null);
+                            output.setText(output.getText() + "x");
+                        }
                     }
                 }
             }
@@ -250,11 +263,18 @@ public class Compute extends Activity {
                     }
                     else
                     {
-                        value1 = Float.parseFloat(output.getText() + "");
-                        sub = true;
-                        dot = false;
-                        char1.setText(null);
-                        output.setText(output.getText() + "-");
+                        if (add || sub || mul || div)
+                        {
+                            calculate();
+                            output.setText(output.getText() + "-");
+                        }
+                        else {
+                            value1 = Float.parseFloat(output.getText() + "");
+                            sub = true;
+                            dot = false;
+                            char1.setText(null);
+                            output.setText(output.getText() + "-");
+                        }
                     }
                 }
             }
@@ -277,11 +297,18 @@ public class Compute extends Activity {
                     }
                     else
                     {
-                        value1 = Float.parseFloat((String) output.getText());
-                        add = true;
-                        dot = false;
-                        char1.setText(null);
-                        output.setText(output.getText() + "+");
+                        if (add || sub || mul || div)
+                        {
+                            calculate();
+                            output.setText(output.getText() + "+");
+                        }
+                        else {
+                            value1 = Float.parseFloat((String) output.getText());
+                            add = true;
+                            dot = false;
+                            char1.setText(null);
+                            output.setText(output.getText() + "+");
+                        }
                     }
                 }
             }
@@ -290,42 +317,47 @@ public class Compute extends Activity {
         buttoneqa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (chk) {
-                    tmp = output.getText().toString();
-                    if (tmp.length() != 0) {
-                        ch = tmp.charAt(tmp.length() - 1);
-                    }
-                    if ( (ch != '+') && (ch != '-') && (ch != 'x') && (ch != '÷')) {
-                        value2 = Float.parseFloat(char1.getText() + "");
-                        if (div) {
-                            output.setText(value1 / value2 + "");
-                            div = false;
-                        }
-                        if (mul) {
-                            output.setText(value1 * value2 + "");
-                            mul = false;
-                        }
-                        if (sub) {
-                            output.setText(value1 - value2 + "");
-                            sub = false;
-                        }
-                        if (add) {
-                            output.setText(value1 + value2 + "");
-                            add = false;
-                        }
-                    }
-                    else {
-                        output.setText("");
-                        chk=false;
-                        dot=false;
-                        value1=0;
-                    }
-                }
-                else {
-                    output.setText("");
-                }
+                calculate();
             }
         });
+    }
+
+    public void calculate()
+    {
+        if (chk) {
+            tmp = output.getText().toString();
+            if (tmp.length() != 0) {
+                ch = tmp.charAt(tmp.length() - 1);
+            }
+            if ( (ch != '+') && (ch != '-') && (ch != 'x') && (ch != '÷')) {
+                value2 = Float.parseFloat(char1.getText() + "");
+                if (div) {
+                    output.setText(value1 / value2 + "");
+                    div = false;
+                }
+                if (mul) {
+                    output.setText(value1 * value2 + "");
+                    mul = false;
+                }
+                if (sub) {
+                    output.setText(value1 - value2 + "");
+                    sub = false;
+                }
+                if (add) {
+                    output.setText(value1 + value2 + "");
+                    add = false;
+                }
+            }
+            else {
+                output.setText("");
+                chk=false;
+                dot=false;
+                value1=0;
+            }
+        }
+        else {
+            output.setText("");
+        }
     }
 
     @Override
